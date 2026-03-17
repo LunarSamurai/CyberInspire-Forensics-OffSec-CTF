@@ -11,14 +11,16 @@ export default async function LeaderboardPage() {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect("/");
 
-  const [{ data: profile }, { data: board }, { data: challenges }] = await Promise.all([
+  const [{ data: profileData }, { data: boardData }, { data: challengesData }] = await Promise.all([
     supabase.from("profiles").select("*").eq("id", user.id).single(),
     supabase.from("scoreboard").select("*").limit(50),
     supabase.from("challenges").select("id, points"),
   ]);
 
-  const entries = (board as ScoreboardEntry[] | null) ?? [];
-  const maxPoints = (challenges ?? []).reduce((s: number, c: { points: number }) => s + c.points, 0);
+  const profile = profileData as { username: string } | null;
+  const entries = (boardData as ScoreboardEntry[] | null) ?? [];
+  const challenges = (challengesData as { id: string; points: number }[] | null) ?? [];
+  const maxPoints = challenges.reduce((s, c) => s + c.points, 0);
   const currentUserRank = entries.findIndex((e) => e.user_id === user.id) + 1;
   const currentUser = entries.find((e) => e.user_id === user.id);
 
@@ -119,7 +121,7 @@ export default async function LeaderboardPage() {
               <p className="font-mono text-sm mt-1" style={{ color: "rgba(156,176,220,0.4)" }}>Be the first to register and solve a challenge!</p>
             </div>
           ) : (
-            <div className="divide-y" style={{ divideColor: "rgba(21,101,192,0.1)" }}>
+            <div className="divide-y" style={{ borderColor: "rgba(21,101,192,0.1)" }}>
               {entries.map((entry, i) => {
                 const rank = i + 1;
                 const { color, label } = rankStyle(rank);

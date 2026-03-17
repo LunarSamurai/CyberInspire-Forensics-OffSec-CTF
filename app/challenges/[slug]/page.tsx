@@ -17,10 +17,13 @@ export default async function ChallengePage({ params }: Props) {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect("/");
 
-  const [{ data: profile }, { data: challenge }] = await Promise.all([
+  const [{ data: profileData }, { data: challengeData }] = await Promise.all([
     supabase.from("profiles").select("*").eq("id", user.id).single(),
     supabase.from("challenges").select("*").eq("slug", slug).single(),
   ]);
+
+  const profile = profileData as { id: string; username: string; created_at: string } | null;
+  const challenge = challengeData as Challenge | null;
 
   if (!challenge) notFound();
 

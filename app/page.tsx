@@ -102,7 +102,7 @@ export default function AuthPage() {
               <Shield className="w-12 h-12 relative z-10" style={{ color: "#26c6da", filter: "drop-shadow(0 0 12px rgba(38,198,218,0.7))" }} />
             </div>
             <span className="font-mono text-2xl font-bold tracking-widest uppercase glow-text" style={{ color: "#26c6da" }}>
-              CTF<span style={{ color: "#fff" }}>Platform</span>
+              Cyber<span style={{ color: "#fff" }}>Inspire</span>
             </span>
           </div>
 

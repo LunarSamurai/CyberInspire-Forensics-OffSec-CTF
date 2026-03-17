@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "CTF Platform | Capture The Flag",
+  title: "CyberInspire | Inspire the Youth!",
   description: "Test your cybersecurity skills across forensics, web hacking, and more.",
 };
 

@@ -36,7 +36,7 @@ export default function Navbar({ username }: NavbarProps) {
             <Shield className="w-7 h-7 transition-all group-hover:scale-110"
               style={{ color: "#26c6da", filter: "drop-shadow(0 0 8px rgba(38,198,218,0.5))" }} />
             <span className="font-mono font-bold tracking-widest text-base uppercase" style={{ color: "#e8f0ff" }}>
-              CTF<span style={{ color: "#26c6da" }}>Platform</span>
+              Cyber<span style={{ color: "#26c6da" }}>Inspire</span>
             </span>
           </Link>
 

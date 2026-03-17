@@ -3,7 +3,7 @@ import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import Navbar from "@/components/Navbar";
 import { Shield, Lock, CheckCircle2, Star, Target, Database, Globe, Key } from "lucide-react";
-import type { Challenge, Solve } from "@/lib/types";
+import type { Challenge, Solve, Profile, ScoreboardEntry } from "@/lib/types";
 
 const categoryIcons: Record<string, React.ElementType> = {
   forensics: Database,
@@ -18,19 +18,24 @@ export default async function DashboardPage() {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect("/");
 
-  const [{ data: profile }, { data: challenges }, { data: solves }, { data: board }] = await Promise.all([
+  const [{ data: profileData }, { data: challengesData }, { data: solvesData }, { data: boardData }] = await Promise.all([
     supabase.from("profiles").select("*").eq("id", user.id).single(),
     supabase.from("challenges").select("*").order("points"),
     supabase.from("solves").select("*").eq("user_id", user.id),
     supabase.from("scoreboard").select("*").eq("user_id", user.id).single(),
   ]);
 
-  const solvedIds = new Set((solves as Solve[] | null)?.map((s) => s.challenge_id) ?? []);
-  const totalPoints = (board as { total_points: number } | null)?.total_points ?? 0;
-  const totalChallenges = (challenges as Challenge[] | null)?.length ?? 0;
+  const profile = profileData as Profile | null;
+  const challenges = challengesData as Challenge[] | null;
+  const solves = solvesData as Solve[] | null;
+  const board = boardData as ScoreboardEntry | null;
+
+  const solvedIds = new Set(solves?.map((s) => s.challenge_id) ?? []);
+  const totalPoints = board?.total_points ?? 0;
+  const totalChallenges = challenges?.length ?? 0;
   const solvedCount = solvedIds.size;
 
-  const grouped = ((challenges as Challenge[] | null) ?? []).reduce<Record<string, Challenge[]>>((acc, c) => {
+  const grouped = (challenges ?? []).reduce<Record<string, Challenge[]>>((acc, c) => {
     if (!acc[c.category]) acc[c.category] = [];
     acc[c.category].push(c);
     return acc;
@@ -64,7 +69,7 @@ export default async function DashboardPage() {
             { label: "Total Points", value: totalPoints, icon: Star, color: "#26c6da" },
             { label: "Solved", value: `${solvedCount}/${totalChallenges}`, icon: CheckCircle2, color: "#42a5f5" },
             { label: "Remaining", value: totalChallenges - solvedCount, icon: Target, color: "#ffb74d" },
-            { label: "Max Points", value: ((challenges as Challenge[] | null) ?? []).reduce((s, c) => s + c.points, 0), icon: Shield, color: "#ce93d8" },
+            { label: "Max Points", value: (challenges ?? []).reduce((s, c) => s + c.points, 0), icon: Shield, color: "#ce93d8" },
           ].map(({ label, value, icon: Icon, color }, i) => (
             <div key={label} className="ctf-card p-4 animate-fade-in-up" style={{ animationDelay: `${i * 80}ms` }}>
               <div className="flex items-center justify-between mb-2">
