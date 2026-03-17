@@ -1,0 +1,199 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url("https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap");
+
+:root {
+  --font-mono: "Share Tech Mono", monospace;
+  --font-sans: "IBM Plex Sans", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #020b17;
+  color: #e8f0ff;
+  font-family: var(--font-sans);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ─── Scrollbar ─────────────────────────────── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #020b17; }
+::-webkit-scrollbar-thumb { background: #1565c0; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #26c6da; }
+
+/* ─── Selection ─────────────────────────────── */
+::selection { background: rgba(38, 198, 218, 0.25); color: #fff; }
+
+/* ─── Scanline Overlay ──────────────────────── */
+.scanlines::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 3px,
+    rgba(0, 0, 0, 0.04) 3px,
+    rgba(0, 0, 0, 0.04) 4px
+  );
+  pointer-events: none;
+  z-index: 9998;
+}
+
+/* ─── Glow Text ─────────────────────────────── */
+.glow-text {
+  text-shadow: 0 0 20px rgba(38, 198, 218, 0.7), 0 0 40px rgba(38, 198, 218, 0.3);
+}
+
+.glow-text-blue {
+  text-shadow: 0 0 20px rgba(21, 101, 192, 0.8), 0 0 40px rgba(21, 101, 192, 0.4);
+}
+
+/* ─── Card ──────────────────────────────────── */
+.ctf-card {
+  background: linear-gradient(135deg, rgba(13, 31, 60, 0.9) 0%, rgba(7, 20, 40, 0.95) 100%);
+  border: 1px solid rgba(21, 101, 192, 0.3);
+  border-radius: 12px;
+  box-shadow: 0 4px 32px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.ctf-card:hover {
+  border-color: rgba(38, 198, 218, 0.45);
+  box-shadow: 0 4px 32px rgba(0, 0, 0, 0.6), 0 0 24px rgba(38, 198, 218, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+/* ─── Input ─────────────────────────────────── */
+.ctf-input {
+  background: rgba(4, 13, 26, 0.8);
+  border: 1px solid rgba(21, 101, 192, 0.35);
+  border-radius: 8px;
+  color: #e8f0ff;
+  font-family: var(--font-mono);
+  padding: 0.75rem 1rem;
+  width: 100%;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+}
+.ctf-input:focus {
+  border-color: #26c6da;
+  box-shadow: 0 0 0 3px rgba(38, 198, 218, 0.15);
+}
+.ctf-input::placeholder {
+  color: rgba(156, 176, 220, 0.4);
+}
+
+/* ─── Button ────────────────────────────────── */
+.ctf-btn-primary {
+  background: linear-gradient(135deg, #1565c0 0%, #0d47a1 100%);
+  border: 1px solid rgba(38, 198, 218, 0.3);
+  border-radius: 8px;
+  color: #fff;
+  cursor: pointer;
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  letter-spacing: 0.05em;
+  padding: 0.75rem 1.5rem;
+  text-transform: uppercase;
+  transition: all 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+.ctf-btn-primary::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(38, 198, 218, 0.15) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.ctf-btn-primary:hover::after { opacity: 1; }
+.ctf-btn-primary:hover {
+  border-color: rgba(38, 198, 218, 0.6);
+  box-shadow: 0 0 20px rgba(21, 101, 192, 0.5), 0 0 40px rgba(21, 101, 192, 0.2);
+  transform: translateY(-1px);
+}
+.ctf-btn-primary:active { transform: translateY(0); }
+.ctf-btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ─── Badge ─────────────────────────────────── */
+.badge-forensics  { background: rgba(21, 101, 192, 0.2); color: #42a5f5; border: 1px solid rgba(21, 101, 192, 0.4); }
+.badge-easy       { background: rgba(38, 198, 218, 0.1); color: #26c6da; border: 1px solid rgba(38, 198, 218, 0.3); }
+.badge-medium     { background: rgba(255, 183, 77, 0.1); color: #ffb74d; border: 1px solid rgba(255, 183, 77, 0.3); }
+.badge-hard       { background: rgba(239, 83, 80, 0.1);  color: #ef5350; border: 1px solid rgba(239, 83, 80, 0.3); }
+
+/* ─── Animations ────────────────────────────── */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  15%, 45%, 75% { transform: translateX(-7px); }
+  30%, 60%, 90% { transform: translateX(7px); }
+}
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 0 1px rgba(38, 198, 218, 0.5); }
+  50% { box-shadow: 0 0 60px rgba(38, 198, 218, 0.9), 0 0 120px rgba(38, 198, 218, 0.4), 0 0 0 2px #26c6da; }
+}
+@keyframes redFlash {
+  0%, 100% { box-shadow: 0 0 0 1px rgba(239, 83, 80, 0.4); background: transparent; }
+  50% { box-shadow: 0 0 40px rgba(239, 83, 80, 0.7), 0 0 0 2px #ef5350; background: rgba(239, 83, 80, 0.05); }
+}
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-20px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+@keyframes gridPan {
+  from { background-position: 0 0; }
+  to   { background-position: 48px 48px; }
+}
+
+.animate-shake      { animation: shake 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) both; }
+.animate-pulse-glow { animation: pulseGlow 1s ease-in-out 2; }
+.animate-red-flash  { animation: redFlash 0.6s ease-in-out 2; }
+.animate-fade-in-up { animation: fadeInUp 0.5s ease-out both; }
+.animate-slide-in   { animation: slideInLeft 0.4s ease-out both; }
+.animate-blink      { animation: blink 1s step-end infinite; }
+
+/* ─── Stagger delays ────────────────────────── */
+.delay-100 { animation-delay: 100ms; }
+.delay-200 { animation-delay: 200ms; }
+.delay-300 { animation-delay: 300ms; }
+.delay-400 { animation-delay: 400ms; }
+
+/* ─── Rank medals ───────────────────────────── */
+.rank-gold   { color: #ffd700; text-shadow: 0 0 12px rgba(255, 215, 0, 0.6); }
+.rank-silver { color: #c0c0c0; text-shadow: 0 0 12px rgba(192, 192, 192, 0.5); }
+.rank-bronze { color: #cd7f32; text-shadow: 0 0 12px rgba(205, 127, 50, 0.5); }
+
+/* ─── Solved stamp ──────────────────────────── */
+.solved-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  background: rgba(2, 11, 23, 0.75);
+  backdrop-filter: blur(2px);
+}
