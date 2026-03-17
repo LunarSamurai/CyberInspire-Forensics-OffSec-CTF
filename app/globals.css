@@ -1,8 +1,9 @@
+@import url("https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@import url("https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap");
 
 :root {
   --font-mono: "Share Tech Mono", monospace;
@@ -81,7 +82,7 @@ body {
   border-radius: 8px;
   color: #e8f0ff;
   font-family: var(--font-mono);
-  padding: 0.75rem 1rem;
+  padding: 0.75rem 1rem 0.75rem 2.75rem;
   width: 100%;
   transition: border-color 0.2s, box-shadow 0.2s;
   outline: none;

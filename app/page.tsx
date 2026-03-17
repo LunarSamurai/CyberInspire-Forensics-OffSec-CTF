@@ -150,21 +150,21 @@ export default function AuthPage() {
             <form onSubmit={handleAuth} className="space-y-4">
               {mode === "signup" && (
                 <div className="relative animate-fade-in-up">
-                  <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: "#26c6da" }} />
-                  <input className="ctf-input pl-10" type="text" placeholder="username" value={username}
+                  <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: "#26c6da" }} />
+                  <input className="ctf-input" type="text" placeholder="username" value={username}
                     onChange={(e) => setUsername(e.target.value)} required autoComplete="username" />
                 </div>
               )}
 
               <div className="relative">
-                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: "#26c6da" }} />
-                <input className="ctf-input pl-10" type="email" placeholder="email@example.com" value={email}
+                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: "#26c6da" }} />
+                <input className="ctf-input" type="email" placeholder="email@example.com" value={email}
                   onChange={(e) => setEmail(e.target.value)} required autoComplete="email" />
               </div>
 
               <div className="relative">
-                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: "#26c6da" }} />
-                <input className="ctf-input pl-10 pr-10" type={showPw ? "text" : "password"} placeholder="password"
+                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: "#26c6da" }} />
+                <input className="ctf-input pr-10" type={showPw ? "text" : "password"} placeholder="password"
                   value={password} onChange={(e) => setPassword(e.target.value)} required autoComplete={mode === "signup" ? "new-password" : "current-password"} />
                 <button type="button" onClick={() => setShowPw(!showPw)}
                   className="absolute right-3 top-1/2 -translate-y-1/2 opacity-60 hover:opacity-100 transition-opacity">
