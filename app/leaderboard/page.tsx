@@ -128,14 +128,12 @@ export default async function LeaderboardPage() {
                 const isMe = entry.user_id === user.id;
                 return (
                   <div key={entry.user_id}
-                    className="grid grid-cols-12 px-6 py-4 items-center transition-colors animate-slide-in"
+                    className="grid grid-cols-12 px-6 py-4 items-center animate-slide-in leaderboard-row"
                     style={{
                       animationDelay: `${i * 40}ms`,
                       background: isMe ? "rgba(38,198,218,0.05)" : "transparent",
                       borderLeft: isMe ? "2px solid rgba(38,198,218,0.5)" : "2px solid transparent",
-                    }}
-                    onMouseEnter={e => { if (!isMe) (e.currentTarget as HTMLElement).style.background = "rgba(21,101,192,0.06)"; }}
-                    onMouseLeave={e => { if (!isMe) (e.currentTarget as HTMLElement).style.background = "transparent"; }}>
+                    }}>
 
                     {/* Rank */}
                     <div className="col-span-1 font-mono text-sm font-bold" style={{ color, textShadow: rank <= 3 ? `0 0 12px ${color}` : "none" }}>

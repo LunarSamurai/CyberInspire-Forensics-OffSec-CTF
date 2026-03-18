@@ -4,7 +4,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 :root {
   --font-mono: "Share Tech Mono", monospace;
   --font-sans: "IBM Plex Sans", sans-serif;
@@ -94,6 +93,15 @@ body {
 .ctf-input::placeholder {
   color: rgba(156, 176, 220, 0.4);
 }
+/* Kill browser autofill white background */
+.ctf-input:-webkit-autofill,
+.ctf-input:-webkit-autofill:hover,
+.ctf-input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0px 1000px rgba(4, 13, 26, 0.95) inset !important;
+  -webkit-text-fill-color: #e8f0ff !important;
+  caret-color: #e8f0ff;
+  border-color: rgba(21, 101, 192, 0.35) !important;
+}
 
 /* ─── Button ────────────────────────────────── */
 .ctf-btn-primary {
@@ -182,7 +190,10 @@ body {
 .delay-300 { animation-delay: 300ms; }
 .delay-400 { animation-delay: 400ms; }
 
-/* ─── Rank medals ───────────────────────────── */
+/* ─── Leaderboard row hover ─────────────────── */
+.leaderboard-row:hover {
+  background: rgba(21, 101, 192, 0.06) !important;
+}
 .rank-gold   { color: #ffd700; text-shadow: 0 0 12px rgba(255, 215, 0, 0.6); }
 .rank-silver { color: #c0c0c0; text-shadow: 0 0 12px rgba(192, 192, 192, 0.5); }
 .rank-bronze { color: #cd7f32; text-shadow: 0 0 12px rgba(205, 127, 50, 0.5); }

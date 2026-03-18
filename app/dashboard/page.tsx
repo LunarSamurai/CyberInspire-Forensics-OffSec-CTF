@@ -11,7 +11,7 @@ const categoryIcons: Record<string, React.ElementType> = {
   crypto: Key,
 };
 
-const difficultyOrder: Record<string, number> = { easy: 0, medium: 1, hard: 2 };
+const difficultyOrder: Record<string, number> = { "Part 1": 0, "Part 2": 1, "Part 3": 2, easy: 0, medium: 1, hard: 2 };
 
 export default async function DashboardPage() {
   const supabase = await createClient();
@@ -20,7 +20,7 @@ export default async function DashboardPage() {
 
   const [{ data: profileData }, { data: challengesData }, { data: solvesData }, { data: boardData }] = await Promise.all([
     supabase.from("profiles").select("*").eq("id", user.id).single(),
-    supabase.from("challenges").select("*").order("points"),
+    supabase.from("challenges").select("*").order("difficulty"),
     supabase.from("solves").select("*").eq("user_id", user.id),
     supabase.from("scoreboard").select("*").eq("user_id", user.id).single(),
   ]);

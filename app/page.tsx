@@ -3,13 +3,12 @@
 import { useState, useEffect } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
-import { Shield, Terminal, Eye, EyeOff, Lock, User, Mail, AlertCircle } from "lucide-react";
+import { Shield, Terminal, Eye, EyeOff, Lock, User, AlertCircle } from "lucide-react";
 
 type Mode = "signin" | "signup";
 
 export default function AuthPage() {
   const [mode, setMode] = useState<Mode>("signin");
-  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
   const [showPw, setShowPw] = useState(false);
@@ -46,8 +45,11 @@ export default function AuthPage() {
         if (!/^[a-zA-Z0-9_-]+$/.test(username))
           throw new Error("Username can only contain letters, numbers, _ and -");
 
+        // Generate a fake email from username so users only need username + password
+        const fakeEmail = `${username.toLowerCase()}@ctf.local`;
+
         const { error } = await supabase.auth.signUp({
-          email,
+          email: fakeEmail,
           password,
           options: {
             data: { username },
@@ -55,10 +57,12 @@ export default function AuthPage() {
           },
         });
         if (error) throw error;
-        setSuccess("Account created! Check your email to confirm, then sign in.");
+        setSuccess("Account created! You can now sign in.");
         setMode("signin");
       } else {
-        const { error } = await supabase.auth.signInWithPassword({ email, password });
+        // Sign in: derive email from username the same way
+        const fakeEmail = `${username.toLowerCase()}@ctf.local`;
+        const { error } = await supabase.auth.signInWithPassword({ email: fakeEmail, password });
         if (error) throw error;
         router.push("/dashboard");
       }
@@ -111,7 +115,7 @@ export default function AuthPage() {
             <br />the flags?
           </h1>
           <p className="text-ice-200 text-lg mb-8 max-w-md lg:mx-0 mx-auto" style={{ color: "#9db0dc" }}>
-            Test your skills in digital forensics, web exploitation, and more. Climb the leaderboard.
+            Test your skills in digital forensics, web history recovery, and password recovery. Climb the leaderboard.
           </p>
 
           {/* Challenge previews */}
@@ -148,18 +152,11 @@ export default function AuthPage() {
             </div>
 
             <form onSubmit={handleAuth} className="space-y-4">
-              {mode === "signup" && (
-                <div className="relative animate-fade-in-up">
-                  <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: "#26c6da" }} />
-                  <input className="ctf-input" type="text" placeholder="username" value={username}
-                    onChange={(e) => setUsername(e.target.value)} required autoComplete="username" />
-                </div>
-              )}
-
+              {/* Username always shown for both sign in and sign up */}
               <div className="relative">
-                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: "#26c6da" }} />
-                <input className="ctf-input" type="email" placeholder="email@example.com" value={email}
-                  onChange={(e) => setEmail(e.target.value)} required autoComplete="email" />
+                <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: "#26c6da" }} />
+                <input className="ctf-input" type="text" placeholder="username" value={username}
+                  onChange={(e) => setUsername(e.target.value)} required autoComplete="username" />
               </div>
 
               <div className="relative">

@@ -128,40 +128,35 @@ export default async function ChallengePage({ params }: Props) {
               </div>
             </div>
 
-            {/* Downloads */}
+            {/* Downloads — only show if file is available */}
+            {challenge.file_url && (
             <div className="ctf-card p-6 animate-fade-in-up delay-200">
               <div className="flex items-center gap-2 mb-4">
                 <Cpu className="w-4 h-4" style={{ color: "#26c6da" }} />
                 <h2 className="font-mono text-sm uppercase tracking-widest" style={{ color: "#26c6da" }}>
-                  Resources & Downloads
+                  Challenge Files
                 </h2>
               </div>
               <div className="rounded-lg p-4" style={{ background: "rgba(2,11,23,0.8)", border: "1px solid rgba(21,101,192,0.2)" }}>
                 <p className="font-mono text-xs mb-3" style={{ color: "#9db0dc" }}>
                   <span style={{ color: "#26c6da" }}>$</span> ls -la ./challenge_files/
                 </p>
-                <div className="space-y-2">
-                  {[
-                    { name: "challenge.zip", type: "Archive" },
-                    { name: "README.txt", type: "Instructions" },
-                  ].map((f) => (
-                    <div key={f.name}
-                      className="flex items-center justify-between py-2 px-3 rounded-lg"
-                      style={{ background: "rgba(21,101,192,0.08)", border: "1px solid rgba(21,101,192,0.15)" }}>
-                      <div className="flex items-center gap-2">
-                        <Download className="w-3.5 h-3.5" style={{ color: "#42a5f5" }} />
-                        <span className="font-mono text-sm" style={{ color: "#c5d3f0" }}>{f.name}</span>
-                        <span className="font-mono text-xs" style={{ color: "#9db0dc" }}>({f.type})</span>
-                      </div>
-                      <span className="font-mono text-xs" style={{ color: "rgba(156,176,220,0.5)" }}>Coming soon</span>
-                    </div>
-                  ))}
-                </div>
+                <a
+                  href={challenge.file_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="ctf-btn-primary w-full flex items-center justify-center gap-2"
+                  style={{ textDecoration: "none" }}
+                >
+                  <Download className="w-4 h-4" />
+                  Download Challenge Files
+                </a>
                 <p className="font-mono text-xs mt-3" style={{ color: "rgba(156,176,220,0.4)" }}>
-                  # Add Supabase Storage links here once files are uploaded
+                  # Signed URLs expire after 1 year — regenerate in Supabase Storage if needed
                 </p>
               </div>
             </div>
+            )}
           </div>
 
           {/* ── Sidebar ── */}
