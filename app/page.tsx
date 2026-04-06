@@ -46,7 +46,7 @@ export default function AuthPage() {
           throw new Error("Username can only contain letters, numbers, _ and -");
 
         // Generate a fake email from username so users only need username + password
-        const fakeEmail = `${username.toLowerCase()}@ctf.local`;
+        const fakeEmail = `${username.toLowerCase()}@cyberinspire.com`;
 
         const { error } = await supabase.auth.signUp({
           email: fakeEmail,
@@ -61,7 +61,7 @@ export default function AuthPage() {
         setMode("signin");
       } else {
         // Sign in: derive email from username the same way
-        const fakeEmail = `${username.toLowerCase()}@ctf.local`;
+        const fakeEmail = `${username.toLowerCase()}@cyberinspire.com`;
         const { error } = await supabase.auth.signInWithPassword({ email: fakeEmail, password });
         if (error) throw error;
         router.push("/dashboard");
