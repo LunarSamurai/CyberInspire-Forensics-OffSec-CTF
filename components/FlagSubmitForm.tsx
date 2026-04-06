@@ -35,13 +35,14 @@ export default function FlagSubmitForm({ challenge, userId, alreadySolved }: Fla
   // Load existing attempt count on mount
   useEffect(() => {
     const loadAttempts = async () => {
-      const { data } = await supabase
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const { data } = await (supabase as any)
         .from("attempts")
         .select("count")
         .eq("user_id", userId)
         .eq("challenge_id", challenge.id)
         .maybeSingle();
-      if (data) setWrongAttempts(data.count);
+      if (data) setWrongAttempts((data as { count: number }).count);
     };
     if (!alreadySolved) loadAttempts();
   }, [userId, challenge.id, alreadySolved]);
@@ -84,7 +85,8 @@ export default function FlagSubmitForm({ challenge, userId, alreadySolved }: Fla
       setPointsAwarded(awarded);
 
       // Record solve with points awarded
-      await supabase.from("solves").insert({
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      await (supabase as any).from("solves").insert({
         user_id: userId,
         challenge_id: challenge.id,
         points_awarded: awarded,
@@ -100,7 +102,8 @@ export default function FlagSubmitForm({ challenge, userId, alreadySolved }: Fla
       setStatus("wrong");
 
       // Upsert attempt count
-      await supabase.from("attempts").upsert(
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      await (supabase as any).from("attempts").upsert(
         { user_id: userId, challenge_id: challenge.id, count: newAttempts },
         { onConflict: "user_id,challenge_id" }
       );

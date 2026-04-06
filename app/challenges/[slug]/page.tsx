@@ -4,7 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import Navbar from "@/components/Navbar";
 import FlagSubmitForm from "@/components/FlagSubmitForm";
 import { ArrowLeft, Clock, Star, Users, Terminal, Download, Cpu } from "lucide-react";
-import type { Solve } from "@/lib/types";
+import type { Solve, Challenge } from "@/lib/types";
 
 interface Props {
   params: Promise<{ slug: string }>;
